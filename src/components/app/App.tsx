@@ -1,10 +1,10 @@
+import Header from 'features/Header';
 import HomePage from 'pages/HomePage';
-import { useEffect } from 'react';
+
 import { Helmet } from 'react-helmet';
-import { useLocation } from 'react-router-dom';
 import PrivateRoutes from 'routes/PrivateRouter';
 import PublicRoutes from 'routes/PublicRouter';
-import './App.css';
+import './App.scss';
 
 const App: React.FC = (): JSX.Element => {
   return (
@@ -12,6 +12,8 @@ const App: React.FC = (): JSX.Element => {
       <Helmet>
         <title>App</title>
       </Helmet>
+
+      <Header />
 
       <PublicRoutes />
       <PrivateRoutes />
