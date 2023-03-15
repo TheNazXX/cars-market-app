@@ -1,8 +1,9 @@
-
+import classnames from 'classnames';
+import styles from './header.module.scss';
 
 const Header: React.FC = (): JSX.Element => {
   return (
-    <>Header</>
+    <div className={classnames(styles.header)}>Header</div>
   );
 };
 
