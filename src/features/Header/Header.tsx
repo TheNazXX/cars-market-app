@@ -3,8 +3,8 @@ import styles from './header.module.scss';
 
 const Header: React.FC = (): JSX.Element => {
   return (
-    <div className={classnames(styles.header)}>Header</div>
+    <header className={classnames(styles.header)}>Header</header>
   );
 };
 
-export default Header
+export default Header;

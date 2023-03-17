@@ -6,6 +6,8 @@ const HomePage: React.FC = (): JSX.Element => {
       <Helmet>
         <title>Главная MarketPlace</title>
       </Helmet>
+
+      123
     </>
   );
 };

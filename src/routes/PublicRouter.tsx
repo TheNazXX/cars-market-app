@@ -8,7 +8,7 @@ const ProductDetailsPage = lazy(() => import('pages/ProductDetailsPage'));
 const PublicRoutes: React.FC = (): JSX.Element => {
   const location = useLocation();
   const isMatch = checkPathMatch(location.pathname, paths);
-  console.log(isMatch)
+
   return (
     <Routes>
       <Route path={paths.home} element={<HomePage />}/>
