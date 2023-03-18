@@ -1,4 +1,8 @@
 export interface I_ProductCard{
   _id: string,
-  label: string,
+  img: string,
+  price: number,
+  priceOld: number,
+  title: string,
+  description: string
 };

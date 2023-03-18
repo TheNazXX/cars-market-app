@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import ProductCard from 'components/ProductCard';
 import {Helmet} from 'react-helmet';
+import { ProductsMockData } from 'mockData/ProductsMockData/ProductsMockData';
 import styles from './home-page.module.scss';
 
 const HomePage: React.FC = (): JSX.Element => {
@@ -11,7 +12,9 @@ const HomePage: React.FC = (): JSX.Element => {
       </Helmet>
 
       <div className={classNames(styles.productGroup)}>
-        <ProductCard _id={'1'} label='Ноутбук'/>
+        {ProductsMockData.map(data => {
+          return <ProductCard {...data}/>
+        })}
       </div>
     </>
   );
