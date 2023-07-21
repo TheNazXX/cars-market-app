@@ -5,4 +5,5 @@ export interface ButtonProps{
   styles?: string;
   handleClick?: MouseEventHandler<HTMLButtonElement>;
   btnType?: "button" | "submit";
+  rightIcon?: string
 };

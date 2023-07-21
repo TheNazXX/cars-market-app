@@ -6,3 +6,4 @@ export * from "./SearchBar/SearchBar";
 export * from "./CustomFilter/CustomFilter";
 export * from "./SearchManufacturer/SearchManufacturer";
 export * from "./CarCard/CarCard";
+export * from "./CarDetails/CarDetails";
