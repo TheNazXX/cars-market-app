@@ -75,7 +75,7 @@ export const SearchBar = () => {
           name="model" 
           value={model}
           onChange={(e) => setModel(e.target.value)}
-          placeholder="Audi"
+          placeholder="Q8"
           className="searchbar__input"  
         />
 
