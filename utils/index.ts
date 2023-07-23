@@ -1,7 +1,7 @@
 import { CarProps } from "./../types/common";
 
 export async function fetchCars(){
-  const url = "https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?model=q3";
+  const url = "https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?model=q3&limit=12";
   const headers = {
     "X-RapidAPI-Key": "1ffdd9f706msh743f719f139056cp15f828jsn3afcf30a9a7a",
 		"X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com"
