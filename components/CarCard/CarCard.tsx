@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { CarProps } from "@/types/common";
-import { calculateCarRent } from "@/utils";
+import { calculateCarRent, generateCarImageUrl } from "@/utils";
 
 import { Button } from "../Button/Button";
 import { CarDetails } from "../CarDetails/CarDetails";
@@ -16,6 +16,8 @@ export const CarCard = ({ item }: { item: CarProps }) => {
 
   const { city_mpg, drive, make, model, transmission, year } = item;
   const carRent = calculateCarRent(city_mpg, year);
+
+  console.log(generateCarImageUrl(item))
 
   return (
     <div className="car-card group">
@@ -32,7 +34,7 @@ export const CarCard = ({ item }: { item: CarProps }) => {
       </p>
 
       <div className="relative w-full h-40 my-3 object-contain">
-        <Image src="/main.png" alt="car-model" fill priority className="object-contain" />
+        <Image src={generateCarImageUrl(item)} alt="car-model" fill priority className="object-contain" />
       </div>
 
       <div className="relative flex w-full mt-2">
