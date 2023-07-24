@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import Image from "next/image";
 import { CarProps } from "@/types/common";
 import { calculateCarRent, generateCarImageUrl } from "@/utils";
@@ -11,16 +11,15 @@ import { CarDetails } from "../CarDetails/CarDetails";
 import './CarCard.css';
 
 
+
 export const CarCard = ({ item }: { item: CarProps }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
-
   const { city_mpg, drive, make, model, transmission, year } = item;
   const carRent = calculateCarRent(city_mpg, year);
 
-  console.log(generateCarImageUrl(item))
 
   return (
-    <div className="car-card group">
+    <div className="car-card group relative">
       <div className="car-card__content">
         <h2 className="car-card__content-title">
           {make} {model}
@@ -34,7 +33,8 @@ export const CarCard = ({ item }: { item: CarProps }) => {
       </p>
 
       <div className="relative w-full h-40 my-3 object-contain">
-        <Image src={generateCarImageUrl(item)} alt="car-model" fill priority className="object-contain" />
+        <Image src={generateCarImageUrl(item)} alt="car-model" fill priority className="object-contain"/>
+
       </div>
 
       <div className="relative flex w-full mt-2">
@@ -45,7 +45,7 @@ export const CarCard = ({ item }: { item: CarProps }) => {
           </div>
           <div className="flex flex-col justify-center items-center gap-2">
             <Image src="/tire.svg" width={20} height={20} alt="tire" />
-            <p className="text-[-14px]">{drive.toUpperCase()}</p>
+            <p className="text-[-14px]">{drive?.toUpperCase()}</p>
           </div>
           <div className="flex flex-col justify-center items-center gap-2">
             <Image src="/gas.svg" width={20} height={20} alt="gas" />

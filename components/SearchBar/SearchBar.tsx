@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { SearchManufacturer } from '../SearchManufacturer/SearchManufacturer';
 import { useRouter} from 'next/navigation';
 import './SearchBar.css';
+import { SearchBarProps } from './SearchBar.props';
 
 
 const SearchButton = ({styles}: {styles?: string}) => {
@@ -20,9 +21,7 @@ const SearchButton = ({styles}: {styles?: string}) => {
   );
 };
 
-export const SearchBar = () => {
-  const [manufacturer, setManufacturer] = useState('');
-  const [model, setModel] = useState('');
+export const SearchBar = ({manufacturer, setManufacturer, model, setModel}: SearchBarProps) => {
   const router = useRouter();
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -32,27 +31,11 @@ export const SearchBar = () => {
       return alert('Please fill in the search bar');
     };
 
-    updateSearchParams(model.toLowerCase(), manufacturer.toLowerCase());
+    setManufacturer(manufacturer);
+    setModel(model);
   };
 
-  const updateSearchParams = (model: string, manufacturer: string) => {
-    const searchParams = new URLSearchParams(window.location.search);
 
-    if(model){
-      searchParams.set('model', model);
-    }else{
-      searchParams.delete('model');
-    };
-
-    if(manufacturer){
-      searchParams.set('manufacturer', manufacturer);
-    }else{
-      searchParams.delete('manufacturer');
-    };
-
-    const newPathName = `${window.location.pathname}?${searchParams.toString()}`;
-    router.push(newPathName)
-  };
 
   return (
     <form className="searchbar" onSubmit={handleSearch}>
@@ -75,7 +58,7 @@ export const SearchBar = () => {
           name="model" 
           value={model}
           onChange={(e) => setModel(e.target.value)}
-          placeholder="Q8"
+          placeholder="Car Model"
           className="searchbar__input"  
         />
 

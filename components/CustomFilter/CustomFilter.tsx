@@ -7,15 +7,15 @@ import { useRouter } from "next/navigation";
 import {Listbox, Transition} from '@headlessui/react';
 
 import "./CustomFilter.css";
-import { updateSearchParams } from "@/utils";
 
-export const  CustomFilter = ({title, options}: CustomFilterProps) => {
+
+export const  CustomFilter = ({title, options, setFilter}: CustomFilterProps) => {
   const router = useRouter();
   const [selected, setSelected] = useState(options[0]);
 
-  const handleUpdateParams = (e: {title: string, value: string}) => {
-    const newPathName = updateSearchParams(title, e.value.toLowerCase());
-    router.push(newPathName);
+  const handleChanged = (e: {title: string, value: string}) => {
+    console.log(e.value)
+    setFilter(e.value);
   };
 
   return (
@@ -24,7 +24,7 @@ export const  CustomFilter = ({title, options}: CustomFilterProps) => {
         value={selected}
         onChange={(e) => {
           setSelected(e);
-          handleUpdateParams(e)
+          handleChanged(e)
         }}
       >
         <div className="relative w-fit z-10">

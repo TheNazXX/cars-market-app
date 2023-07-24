@@ -1,19 +1,63 @@
-import { CustomFilter, Main, SearchBar, CarCard, ShowMore } from "@/components";
-import { fuels, yearsOfProduction } from "@/constants/customFilters";
-import { fetchCars } from "@/utils";
-import Image from "next/image";
+'use client';
 
-export default async function Home({searchParams}: any) {
-  
-  const carsData = await fetchCars({
-    manufacturer: searchParams.manufacturer || '',
-    year: searchParams.year || 2022,
-    fuel: searchParams.fuel || '',
-    limit: searchParams.limit || 8,
-    model: searchParams.model || ''
-  });
+import { useState, useEffect } from 'react';
+import { CustomFilter, Main, SearchBar, CarCard, ShowMore, Loader } from '@/components';
+import { fuels, yearsOfProduction } from '@/constants/customFilters';
+import { fetchCars } from '@/utils';
+import Image from 'next/image';
+import { CarProps } from '@/types/common';
 
-  const isDataEmpty = !Array.isArray(carsData) || carsData.length < 1 || !carsData;
+export default function Home({ searchParams }: any) {
+  const [carsData, setCarsData] = useState<CarProps[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const [manufacturer, setManufacturer] = useState('');
+  const [model, setModel] = useState('');
+
+  const [year, setYear] = useState('2022');
+  const [fuel, setFuel] = useState('');
+
+  const [limit, setLimit] = useState(8);
+
+  useEffect(() => {
+    setLimit(8);
+  }, []);
+
+  useEffect(() => {
+    onRequest();
+  }, [fuel, year, limit, model, manufacturer]);
+
+  const onRequest = () => {
+    setLoading(true);
+    fetchCars({
+      manufacturer,
+      year,
+      fuel,
+      limit,
+      model,
+    }).then(onLoaded).catch(err => {
+      setLoading(false);
+      alert('Oops something went wrong');
+    });
+  };
+
+  const onLoaded = (data: CarProps[]) => {
+    setLoading(false);
+    setCarsData(data);
+  };
+
+  const LoaderComponent = loading ? <Loader /> : null;
+  const View = !loading || carsData.length > 1 ? (
+    <section className="w-full">
+      <div className="catalog__cars-wrapper">
+        {carsData.map((item, idx) => (
+          <CarCard key={`${item.class}${idx}${item.model}`} item={item} />
+        ))}
+      </div>
+      <ShowMore pageNumber={limit / 8} isNext={limit > carsData.length} setLimit={setLimit}/>
+    </section>
+  ) : null
+  const noResults = !loading && carsData.length < 1 ? <div className="my-20 mx-auto font-extrabold">Oops no results...</div> : null;
 
   return (
     <main className="overflow-hidden flex-grow">
@@ -23,37 +67,21 @@ export default async function Home({searchParams}: any) {
           <h1 className="text-4xl font-extrabold">Cars Catalog</h1>
           <p>Explore the cars you might like</p>
 
-          <div className='catalog__filters'>
-          <SearchBar />
+          <div className="catalog__filters">
+            <SearchBar setManufacturer={setManufacturer} setModel={setModel} manufacturer={manufacturer} model={model}/>
 
-          <div className='catalog__filter-container'>
-            <CustomFilter title='fuel' options={fuels}/>
-            <CustomFilter title='year' options={yearsOfProduction}/>
-          </div>
-        </div>
-
-        {!isDataEmpty ? (
-          <section className="w-full">
-            <div className="catalog__cars-wrapper">
-              {carsData.map((item) => (
-                <CarCard item={item}/>
-              ))}
+            <div className="catalog__filter-container">
+              <CustomFilter title="fuel" options={fuels} setFilter={setFuel}/>
+              <CustomFilter title="year" options={yearsOfProduction} setFilter={setYear}/>
             </div>
-
-            <ShowMore
-              pageNumber={(searchParams.limit || 8) / 8}
-              isNext={(searchParams.limit || 8) > carsData.length}
-            />
-          </section>
-        ): (
-          <div className="catalog__error-container">
-            <h2 className="text-black text-xl font-bold">Oops no results</h2>
-            <p>{carsData?.message}</p>
           </div>
-        )}
+
+          {noResults}
+          {View}
+          {LoaderComponent}
+
         </div>
       </div>
     </main>
   );
-};
- 
+}

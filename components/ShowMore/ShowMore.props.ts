@@ -1,4 +1,5 @@
 export interface ShowMoreProps{
   pageNumber: number,
-  isNext: boolean
+  isNext: boolean,
+  setLimit: (limit: number) => void
 };
