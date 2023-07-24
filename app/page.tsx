@@ -1,4 +1,4 @@
-import { CustomFilter, Main, SearchBar, CarCard } from "@/components";
+import { CustomFilter, Main, SearchBar, CarCard, ShowMore } from "@/components";
 import { fuels, yearsOfProduction } from "@/constants/customFilters";
 import { fetchCars } from "@/utils";
 import Image from "next/image";
@@ -9,7 +9,7 @@ export default async function Home({searchParams}: any) {
     manufacturer: searchParams.manufacturer || '',
     year: searchParams.year || 2022,
     fuel: searchParams.fuel || '',
-    limit: searchParams.limit || 10,
+    limit: searchParams.limit || 8,
     model: searchParams.model || ''
   });
 
@@ -39,6 +39,11 @@ export default async function Home({searchParams}: any) {
                 <CarCard item={item}/>
               ))}
             </div>
+
+            <ShowMore
+              pageNumber={(searchParams.limit || 8) / 8}
+              isNext={(searchParams.limit || 8) > carsData.length}
+            />
           </section>
         ): (
           <div className="catalog__error-container">
