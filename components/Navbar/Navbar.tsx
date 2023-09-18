@@ -17,7 +17,7 @@ export const Navbar = () => {
         </Link>
 
         <Button 
-          title="Sing in"
+          title="Sign in"
           styles="text-primary-blue rounded-full bg-white min-w-[130px]"
         /> 
       </nav>
